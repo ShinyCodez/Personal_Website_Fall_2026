@@ -33,7 +33,7 @@
    NAVIGATION: search for `nav` or `.mobile-nav` below.
    EXPERIENCE: `.tl` now stacks cards without the orange line / dots.
    GALLERY / PHOTOS: `.gal`, `.frame`, `.photo`.
-   ANIMATIONS: `#leaves`, `.strip`, `.rv`, and custom cursor styles.
+   ANIMATIONS: `#leaves`, `.strip`, and `.rv`.
    ====================================================================== */
 :root{--bg:#1c1410;--bg2:#251a13;--card:#2d2017;--ink:#f1e4cf;--mute:#bba68d;--g1:#3a2a1c;--g2:#8a5a2b;--g3:#c9622b;--g4:#e9a64f;--g5:#f1e4cf;--line:rgba(233,166,79,.2);--sh:0 8px 24px -10px rgba(0,0,0,.7);--glow:0 0 0 1px rgba(233,166,79,.3),0 12px 36px -10px rgba(233,166,79,.35);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 *,*::before,*::after{box-sizing:border-box}
@@ -104,14 +104,9 @@ h2{font-size:clamp(2.2rem,5vw,3.4rem);margin-bottom:28px}
 footer{text-align:center;padding:90px 20px 50px;background:linear-gradient(var(--bg),var(--g1))}
 footer h2{margin-bottom:12px}footer p{color:var(--mute);margin:0 0 26px}
 small{display:block;margin-top:50px;color:var(--mute)}
-/* ANIMATIONS CSS: scroll reveal and custom pointer */
+/* ANIMATIONS CSS: scroll reveal */
 .rv{opacity:1;transform:none;transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1;transform:none}
-#dot,#ring{position:fixed;top:0;left:0;pointer-events:none;z-index:60;border-radius:50%;display:none}
-#dot{width:7px;height:7px;background:var(--g4);margin:-3.5px 0 0 -3.5px}
-#ring{width:38px;height:38px;margin:-19px 0 0 -19px;border:1.5px solid #e9a64f;background:radial-gradient(circle,rgba(233,166,79,.22),transparent 70%);box-shadow:0 0 22px rgba(233,166,79,.45);transition:width .3s,height .3s,margin .3s,background .3s}
-#ring.h{width:64px;height:64px;margin:-32px 0 0 -32px;background:radial-gradient(circle,rgba(233,166,79,.32),transparent 70%)}
-@media(hover:hover) and (pointer:fine){#dot,#ring{display:block}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}#leaves{display:none}}
 
 /* ADDITIONAL STYLES: experience cards, research cards, education, honors, and mobile menu */
@@ -199,7 +194,7 @@ nav .desktop-links a{white-space:nowrap}
 </style>
 </head>
 <body id="top">
-<canvas id="leaves"></canvas><div id="ring"></div><div id="dot"></div>
+<canvas id="leaves"></canvas>
 <!-- NAVIGATION MENU: Edit the links below to change the top navigation and mobile menu. -->
 <nav aria-label="Main navigation">
   <a class="brand" href="#top">Rafi Uddin<span class="brand-mark">.</span></a>
@@ -408,11 +403,6 @@ for(const l of L){l.ph+=.02*dt;l.y+=(l.vy+G*.3)*dt;l.x+=(Math.sin(l.ph)*.5+.25+G
 if(l.y>H+30||l.x>W+40){l.y=-30;l.x=Math.random()*W*(G>1?.5:1)-(G>1?60:0)}leaf(l)}
 streaks();requestAnimationFrame(loop)}
 if(matchMedia("(prefers-reduced-motion:reduce)").matches){}else requestAnimationFrame(loop);
-/* CUSTOM CURSOR: decorative dot/ring that follows the mouse. */
-const ring=$("#ring"),dot=$("#dot");let mx=0,my=0,rx=0,ry=0;
-addEventListener("pointermove",e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx}px,${my}px)`});
-(function f(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(f)})();
-document.querySelectorAll("a,.card,.photo,.chip,.gal div").forEach(e=>{e.addEventListener("pointerenter",()=>ring.classList.add("h"));e.addEventListener("pointerleave",()=>ring.classList.remove("h"))});
 /* MOBILE MENU: closes the dropdown when someone clicks a link. */
 document.querySelectorAll('.mobile-panel a').forEach(a=>a.addEventListener('click',()=>{const menu=document.querySelector('.mobile-nav');if(menu)menu.open=false;}));
 </script>
